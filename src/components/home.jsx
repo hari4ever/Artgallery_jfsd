@@ -1,8 +1,10 @@
 import React from 'react'
 import '../css/home.css';
+import HomeNav from './navbar.jsx';
 const home = () => {
   return (
     <div className='full_outer_div'>
+        <HomeNav/>
       <div className='out_div_home_container mt-5 pt-5' id='homemain'>
         <div className="home_img_container">
             <img src="https://artlogic-res.cloudinary.com/w_2000,h_2000,c_limit,f_auto,fl_lossy,q_auto/ws-artlogicwebsite0399/usr/images/pages/slideshow_data/1/_j7a1420.jpg" alt='not found' className='home_img'/>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../css/register.css';
+import HomeNav from './navbar.jsx';
 // import { Arr } from '../../App';
 
 
@@ -31,23 +32,7 @@ const  Register = () => {
   }
 
   const image = async () =>{
-    const data0 = new FormData();
-    data0.append("file",img);
-    data0.append("upload_preset", "image_preset");
-
-    try {
-      let cloudName = 'dufxfclza', resource = 'image';
-      let api = `https://api.cloudinary.com/v1_1/${cloudName}/${resource}/upload`;
-      const res = await axios.post(api,data0);
-
-      const { secure_url} = res.data;
-      console.log(secure_url);
-      return secure_url;
-      
-    } catch (error) {
-      console.log(error);
       return '';
-    }
   }
 
   const submitData = async (e) => {
@@ -58,10 +43,12 @@ const  Register = () => {
           const url = await image();
           data.img = url;
       }
-          axios.post('http://localhost:5000/register', data).then( (res) =>{
+            
+          await axios.post('http://localhost:8081/user', data).then( (res) =>{
             console.log(res.data);
             if(res.data){
-              navigate('/');
+              navigate('/verify/'+ res.data.message);
+              
             }
             else {
               alert('THIS USERNAME IS AVAILABLE');
@@ -79,8 +66,8 @@ const  Register = () => {
 
 
   return (
-    <div className='register_full_outer_div'>
     <div className='addhotel-div shadow-lg p-3 d-flex flex-row'>
+      <HomeNav/>
       <div className="test">
         <h1 className='login-h1 text-start'>Sign Up</h1>
         <form className='form-class-addhotel' onSubmit={submitData}>
@@ -103,10 +90,9 @@ const  Register = () => {
       </div>
       <div className='test_2 d-flex flex-column justify-content-center'>
         <div className='login_image'>
-              <img src="https://www.mobitel.uk/assets/img/user/signin-image.jpg" alt='not fount' />
+        <img src="https://static.vecteezy.com/system/resources/previews/003/689/228/non_2x/online-registration-or-sign-up-login-for-account-on-smartphone-app-user-interface-with-secure-password-mobile-application-for-ui-web-banner-access-cartoon-people-illustration-vector.jpg" alt='not fount' height={400}/>
         </div>
       </div>
-    </div>
     </div>
   );
 }
